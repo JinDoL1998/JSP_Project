@@ -24,6 +24,8 @@ public class Now extends HttpServlet{
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		resp.setContentType("text/html;charset=UTF-8");
 		Date now = new Date();
 		
 		String pattern = "yyyy-MM-dd hh:mm:ss";

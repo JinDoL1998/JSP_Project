@@ -11,7 +11,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
   //?deptno=20
-	String pdeptno = request.getParameter("pdeptno");
+  String pdeptno = request.getParameter("pdeptno");
 	
    
   Connection conn = DBConn.getConnection();
