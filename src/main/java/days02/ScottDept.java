@@ -73,7 +73,8 @@ public class ScottDept extends HttpServlet {
 		request.setAttribute("list", list);
 
 		// 포워딩 
-		String path = "/days02/ex12_dept.jsp";
+		//String path = "/days02/ex12_dept.jsp";
+		String path = "/days02/ex12_dept_jstl.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 	}
