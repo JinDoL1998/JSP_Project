@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.util.DBConn;
 
 import days04.board.domain.BoardDTO;
+import days04.board.domain.PageDTO;
 import days04.board.persistence.BoardDAOImpl;
 
 /**
@@ -38,6 +39,17 @@ public class List extends HttpServlet {
 		int totalRecords = 0;	// 총 레코드 수
 		int totalPages = 0;		// 총 페이지 수
 		
+		// 검색 파라미터 시작
+		int searchCondition = 1;
+		try {
+			searchCondition = Integer.parseInt(request.getParameter("searchCondition"));
+		} catch (Exception e) {
+			// 넘어오지 않으면 기본값 1
+		}
+		
+		String searchWord = request.getParameter("searchWord");	// null
+		// 검색 파라미터 끝
+		
 		try {
 			currentPage = Integer.parseInt(request.getParameter("currentpage"));
 		} catch (Exception e) {
@@ -48,9 +60,22 @@ public class List extends HttpServlet {
 		Connection conn = DBConn.getConnection();
 		BoardDAOImpl dao = new BoardDAOImpl(conn);
 		ArrayList<BoardDTO> list = null;
+		PageDTO pDto = null;
 		
 		try {
-			list = dao.select(currentPage, numberPerPage);
+			if(searchWord == null || searchWord.equals("")) {
+				list = dao.select(currentPage, numberPerPage);
+				// totalRecords = dao.getTotalRecords();
+				totalPages = dao.getTotalPages(numberPerPage);
+				pDto = new PageDTO(currentPage, numberPerPage, numberOfPageBlock, totalPages);
+			}
+			else {
+				list = dao.search(searchCondition, searchWord, currentPage, numberPerPage);
+				totalPages = dao.getTotalSearchPages(numberPerPage, searchCondition, searchWord);
+			}
+			
+			pDto = new PageDTO(currentPage, numberPerPage, numberOfPageBlock, totalPages);
+			
 		} catch (SQLException e) {
 			System.out.println("> List.doGet() Exception...");
 			e.printStackTrace();
@@ -59,6 +84,7 @@ public class List extends HttpServlet {
 		
 		// 1. 
 		request.setAttribute("list", list);
+		request.setAttribute("pDto", pDto);
 		
 		// 2 포워딩
 		String path = "/days04/board/list.jsp";

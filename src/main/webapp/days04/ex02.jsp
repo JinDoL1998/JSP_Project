@@ -1,8 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-	String contextPath = request.getContextPath();
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +22,6 @@
     <ul>
     	<li><a href="#">로그인</a></li>
 	    <li><a href="#">회원가입</a></li>
-	    <!-- 			/jspPro  -->
-	    <li><a href="<%=contextPath %>/cstvsboard/list.htm">게시판</a></li>
     </ul>
 </header>
 <h3>
@@ -34,22 +29,22 @@
 </h3>
 <div>
 	<xmp class="code">
-		1. TBL_CSTVSBOARD 테이블 생성
-		2. SEQ_TBL_CSTVSBOARD 시퀀스 생성
-		3. board 폴더
-			days04.board 패키지 생성
-		4. days04.board.domain 패키지 생성
-		   days04.board.persistence 패키지 생성
-		
-		5. days04.board.domain 패키지
-			ㄴ boardDTO.java
-		6. days04.board.persistence 패키지
-			ㄴ BoardDAO.java
-			ㄴ BoardDAOImpl.java
-		게시판 목록 보기 : List.java, list.jsp 	검색기능 X, 페이징처리 X
-		게시판 글 쓰기 : Write.java, write.jsp
-		
-		페이징 처리
+		[JSP 웹 애플리케이션 4가지 영역(scope)]
+		1. 하나의 페이지에서 사용할 수 있는 영역 : page scope 					범위 작음
+											pageContext 기본객체
+		2. 하나의 요청에 사용할 수 있는 영역 : request scope
+										request 기본객체
+									예) request.setAttribute("list", list); 
+									예) request.setAttribute("dto", dto); 
+		3. 하나의 웹 브라우저에서 사용되는 영역 : session scope
+										session 기본 객체
+		4. 하나의 웹 애플리케이션에서 사용되는 영역 : application scope 		범위 넓음
+											application 기본 객체
+											
+											setAttribute();
+											getAttribute();
+											removeAttribute();
+											getAttributeNames();
 	</xmp>  
 </div>
 

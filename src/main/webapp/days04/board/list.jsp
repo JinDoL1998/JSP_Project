@@ -37,6 +37,17 @@
 	
 	<h2>목록 보기</h2>
 	<a href="<%= contextPath%>/cstvsboard/write.htm">글쓰기</a>
+	<select id="cmbNumberPerPage" name="cmbNumberPerPage">
+	</select>
+	<script>
+	    for (var i = 10; i <= 50; i+=5) {
+	     $("#cmbNumberPerPage").append(`<option>\${i}</option>`);      
+	    }
+	    
+	$("#cmbNumberPerPage").on("change", function (){
+		// location.href = `/jspPro/cstvsboard/list.htm?currentpage=&`;   
+	});
+	</script> 
 	<table>
 		<thead>
 			<tr>
@@ -53,7 +64,7 @@
 					<c:forEach items="${list }" var="dto">
 						<tr>
 							<td>${dto.seq }</td>
-							<td class="title"><a href="<%= contextPath %>/cstvsboard/view.htm">${dto.title }</a></td>
+							<td class="title"><a href="<%=contextPath %>/cstvsboard/view.htm?seq=${dto.seq}">${dto.title}</a></td>
 							<td>${dto.writer }</td>
 							<td>${dto.writeDate }</td>
 							<td>${dto.readed }</td>
@@ -69,17 +80,38 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5" align="center">[1] 2 3 4 5 6 7 8 9 10 ></td>
+				<td colspan="5" align="center">
+				<!-- prev [1start] 2 3 4 5 6 7 8 9 10end >next  pDto -->
+				<div class="pagination">
+					<c:if test="${pDto.prev }">
+					 	<a href="<%= contextPath %>/cstvsboard/list.htm?currentpage=${pDto.start-1 }">&lt</a>
+					</c:if>
+					<c:forEach var="i" begin="${pDto.start }" end="${pDto.end }" step="1">
+						<c:choose>
+							<c:when test="${i eq pDto.currentPage }">
+								<%-- <a class="active" href="<%= contextPath %>/cstvsboard/list.htm?currentpage=${i}">${i }</a> --%>
+								<a class="active" href="#">${i }</a>
+							</c:when>
+							<c:otherwise>
+								<a href="<%= contextPath %>/cstvsboard/list.htm?currentpage=${i }">${i}</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${pDto.next }">
+						<a href="<%= contextPath %>/cstvsboard/list.htm?currentpage=${pDto.end+1 }">&gt</a>
+					</c:if>
+				</div>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="5" align="center">
 					<!-- list.htm?searchCondition=1&searchWord=검색어 -->
 					<form method="get">
 						<select name="searchCondition" id="searchCondition">
-							<option value="1">title</option>
-							<option value="2">content</option>
-							<option value="3">writer</option>
-							<option value="4">title+content</option>
+							<option value="1">제목</option>
+							<option value="2">내용</option>
+							<option value="3">작성자</option>
+							<option value="4">제목+내용</option>
 						</select>
 						<input type="text" name="searchWord" id="searchWord"/>
 						<input type="submit" value="search"/>
@@ -98,6 +130,27 @@
 	else if('<%=request.getParameter("write") %>'=="fail"){
 		alert("글 쓰기 실패 :( ");
 	}
+	else if('<%=request.getParameter("delete") %>'=="success"){
+		alert("게시글 삭제 완료 ;) ");
+	}
+	
+	// 검색어, 검색조건 상태유지
+	// list.htm?searchCondition=3&searchWord=ji
+	$("#searchCondition").val(${param.searchCondition});
+   	$("#searchWord").val("${param.searchWord}");
+	
+   	// 검색 후 1 [2] 페이지 번호를 클릭
+   	$(".pagination a:not(.active)").attr("href", function(index, oldHref){
+   		return `\${oldHref}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}`;
+   	});
+   	
+ 	// 검색 후 1 [2] 게시글의 제목을 클릭
+ 	// oldHref == view.htm?seq=57
+   	$(".title a").attr("href", function(index, oldHref){
+   		return `\${oldHref}&currentpage=${param.currentpage}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}`;
+   	});
+ 	
+   	
 </script>
 </body>
 </html>

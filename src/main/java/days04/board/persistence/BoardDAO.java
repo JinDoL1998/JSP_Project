@@ -50,4 +50,8 @@ public interface BoardDAO {
 	
 	
 	
+	// 해당 게시글의 비밀번호를 반환하는 메서드
+	String getOriginalPwd(int seq) throws SQLException;
+	
+	
 }

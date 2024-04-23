@@ -142,8 +142,9 @@ public class BoardDAOImpl implements BoardDAO {
 		Date writeDate;
 		int readed;
 		String content;
+		int tag;
 
-		String sql = "SELECT seq, title, writer, email, writeDate, readed, content "
+		String sql = "SELECT seq, title, writer, email, writeDate, readed, content, tag "
 				+ "FROM tbl_cstvsboard "
 				+ "WHERE seq = ?";
 		try {
@@ -162,14 +163,17 @@ public class BoardDAOImpl implements BoardDAO {
 				writeDate = rs.getDate(5);
 				readed = rs.getInt(6);
 				content = rs.getString(7);
+				tag = rs.getInt(8);
 
 				dto = BoardDTO.builder()
 						.seq(seq)
 						.title(title)
+						.email(email)
 						.writer(writer)
 						.writeDate(writeDate)
 						.readed(readed)
 						.content(content)
+						.tag(tag)
 						.build();
 			}
 
@@ -211,19 +215,21 @@ public class BoardDAOImpl implements BoardDAO {
 
 		int rowCount = 0;
 		String sql = "UPDATE tbl_cstvsboard "
-				+ "SET email=?, title=?, content=? "
-				+ "WHERE seq = ? ";
+				+ "SET email=?, title=?, content=?, tag=? "
+				+ "WHERE seq = ? AND pwd = ? ";
 
 		this.pstmt = conn.prepareStatement(sql);      
 		pstmt.setString(1,  dto.getEmail() );
 		pstmt.setString(2,  dto.getTitle() );
 		pstmt.setString(3,  dto.getContent() );
-		pstmt.setLong(4,  dto.getSeq() );
+		pstmt.setInt(4, dto.getTag());
+		pstmt.setLong(5,  dto.getSeq() );
+		pstmt.setString(6, dto.getPwd());
 		rowCount = this.pstmt.executeUpdate();
 		this.pstmt.close();
 
 		return rowCount;
-
+		
 	}
 
 	@Override
@@ -582,7 +588,7 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public int getTotalSearchRecords(int searchCondition, String searchWord) throws SQLException {
-int totalRecords = 0;
+		int totalRecords = 0;
 		
 		String sql = "SELECT COUNT(*) FROM tbl_cstvsboard ";
 		switch ( searchCondition) {
@@ -655,6 +661,26 @@ int totalRecords = 0;
 		this.pstmt.close();
 		
 		return totalPages;
+	}
+
+	@Override
+	public String getOriginalPwd(int seq) throws SQLException {
+		
+		String originalPwd = null;
+		String sql = "SELECT pwd "
+				+"FROM tbl_cstvsboard "
+				+"WHERE seq = ? ";
+		pstmt = this.conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			originalPwd = rs.getString("pwd");
+		}
+		pstmt.close();
+		rs.close();
+		
+		return originalPwd;
+
 	}
 
 } // class
