@@ -31,7 +31,7 @@ public class List extends HttpServlet {
 
 	
     // list.htm?currentpage=3
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage = 1;		// 현재 페이지 번호
 		int numberPerPage = 10;		// 한 페이지에 출력할 게시글 수
 		
@@ -56,6 +56,12 @@ public class List extends HttpServlet {
 			// 넘어오지 않으면 기본값 1
 		}
 		
+		try {
+			numberPerPage = Integer.parseInt(request.getParameter("numberPerPage"));
+		} catch (Exception e) {
+			// 넘어오지 않으면 기본값 10
+		}
+		
 		// [검색 기능 + 페이징 처리]
 		Connection conn = DBConn.getConnection();
 		BoardDAOImpl dao = new BoardDAOImpl(conn);
@@ -73,7 +79,6 @@ public class List extends HttpServlet {
 				list = dao.search(searchCondition, searchWord, currentPage, numberPerPage);
 				totalPages = dao.getTotalSearchPages(numberPerPage, searchCondition, searchWord);
 			}
-			
 			pDto = new PageDTO(currentPage, numberPerPage, numberOfPageBlock, totalPages);
 			
 		} catch (SQLException e) {
@@ -85,6 +90,7 @@ public class List extends HttpServlet {
 		// 1. 
 		request.setAttribute("list", list);
 		request.setAttribute("pDto", pDto);
+		request.setAttribute("numberPerPage", numberPerPage);
 		
 		// 2 포워딩
 		String path = "/days04/board/list.jsp";

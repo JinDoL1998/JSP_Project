@@ -39,15 +39,22 @@
 	<a href="<%= contextPath%>/cstvsboard/write.htm">글쓰기</a>
 	<select id="cmbNumberPerPage" name="cmbNumberPerPage">
 	</select>
-	<script>
+ 	<script>
 	    for (var i = 10; i <= 50; i+=5) {
 	     $("#cmbNumberPerPage").append(`<option>\${i}</option>`);      
 	    }
 	    
-	$("#cmbNumberPerPage").on("change", function (){
-		// location.href = `/jspPro/cstvsboard/list.htm?currentpage=&`;   
-	});
-	</script> 
+	    $("#cmbNumberPerPage").on("change", function (){
+
+	    	let numberPerPage=$(this).val();
+	        let url = `/jspPro/cstvsboard/list.htm?currentpage=1&numberPerPage=`+numberPerPage;       
+	        location.href = url;    
+  
+
+	     });
+
+				
+	</script>  
 	<table>
 		<thead>
 			<tr>
@@ -140,17 +147,21 @@
    	$("#searchWord").val("${param.searchWord}");
 	
    	// 검색 후 1 [2] 페이지 번호를 클릭
-   	$(".pagination a:not(.active)").attr("href", function(index, oldHref){
-   		return `\${oldHref}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}`;
-   	});
+   	$(".pagination a:not(.active)").attr("href", function (index, oldHref){
+      return `\${oldHref}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}&numberPerPage=${param.numberPerPage}`;
+    });
+
    	
  	// 검색 후 1 [2] 게시글의 제목을 클릭
  	// oldHref == view.htm?seq=57
-   	$(".title a").attr("href", function(index, oldHref){
-   		return `\${oldHref}&currentpage=${param.currentpage}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}`;
-   	});
+   	$(".title a").attr("href", function (index, oldHref){
+      return `\${oldHref}&currentpage=${param.currentpage}&searchCondition=${param.searchCondition}&searchWord=${param.searchWord}&numberPerPage=${param.numberPerPage}`;
+    });
+
  	
-   	
+   	$("#cmbNumberPerPage").val(${param.numberPerPage});  
+
+ 	
 </script>
 </body>
 </html>
