@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/inc/include.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,21 +30,18 @@
 </h3>
 <div>
 	<xmp class="code">
-		[jsp 기본 내장 객체 9가지]
-		1. request  : HttpServletRequest (암기)
-		2. response : HttpServletResponse
-		3. out : JspWriter
-		4. exception : Throwable
-		5. session : HttpSesseion
-		6, application : [ServerContext] (암기))
-		   웹 애플리케이션 정보저장
-		7. pageContext : PageContext
-		   JSP 페이지 대한 장보를 저장하는 객체
-		   ex04_03.jsp
-		8. page : Object
-		   JSP 페이지를 수현한 자바클래스 
-		9. config : ServletConfig 설정 정보 저장
-	</xmp>  
+		
+		1. 세션의 유효시간 설정 방법.
+			1) web.xml 설정
+			2) session.setMaxInnactiveInterval(50*60 초);
+			( 세션의 유효 시간은 반드시 설정 해두자 )
+		
+		2. 서블릿에서 세션을 다룰때 주의할 점
+
+	</xmp>
+	
+	<a href="<%= contextPath %>/days06/session.htm">서블릿 + 세션 방법</a>
+	  
 </div>
 
 <script>

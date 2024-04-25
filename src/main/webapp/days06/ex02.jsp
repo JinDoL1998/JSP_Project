@@ -29,21 +29,19 @@
 </h3>
 <div>
 	<xmp class="code">
-		[jsp 기본 내장 객체 9가지]
-		1. request  : HttpServletRequest (암기)
-		2. response : HttpServletResponse
-		3. out : JspWriter
-		4. exception : Throwable
-		5. session : HttpSesseion
-		6, application : [ServerContext] (암기))
-		   웹 애플리케이션 정보저장
-		7. pageContext : PageContext
-		   JSP 페이지 대한 장보를 저장하는 객체
-		   ex04_03.jsp
-		8. page : Object
-		   JSP 페이지를 수현한 자바클래스 
-		9. config : ServletConfig 설정 정보 저장
-	</xmp>  
+		[쿠키를 사용해서 인증처리]
+		days05
+			ㄴ ex07_default.jsp
+			ㄴ ex07_login.jsp
+			ㄴ ex07_logout.jsp
+			
+		[세션을 사용해서 인증처리]
+		days06
+			ㄴ ex02_default.jsp
+			ㄴ ex02_login.jsp
+			ㄴ ex02_logout.jsp
+	</xmp>
+  
 </div>
 
 <script>

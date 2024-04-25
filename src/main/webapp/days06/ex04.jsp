@@ -1,3 +1,5 @@
+<%@page import="com.util.ConnectionProvider"%>
+<%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -29,21 +31,19 @@
 </h3>
 <div>
 	<xmp class="code">
-		[jsp 기본 내장 객체 9가지]
-		1. request  : HttpServletRequest (암기)
-		2. response : HttpServletResponse
-		3. out : JspWriter
-		4. exception : Throwable
-		5. session : HttpSesseion
-		6, application : [ServerContext] (암기))
-		   웹 애플리케이션 정보저장
-		7. pageContext : PageContext
-		   JSP 페이지 대한 장보를 저장하는 객체
-		   ex04_03.jsp
-		8. page : Object
-		   JSP 페이지를 수현한 자바클래스 
-		9. config : ServletConfig 설정 정보 저장
+		ex04.jsp
+		
+		X DBConn.java - getConnection()
+		커넥션 풀
+		com.util.ConnectionProvider.java
 	</xmp>  
+	<%
+		Connection conn = ConnectionProvider.getConnection();
+	%>
+	conn = <%= conn %><br>
+	<%
+		conn.close();	// 커넥션 풀 반환
+	%>
 </div>
 
 <script>

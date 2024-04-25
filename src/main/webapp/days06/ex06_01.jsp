@@ -29,21 +29,26 @@
 </h3>
 <div>
 	<xmp class="code">
-		[jsp 기본 내장 객체 9가지]
-		1. request  : HttpServletRequest (암기)
-		2. response : HttpServletResponse
-		3. out : JspWriter
-		4. exception : Throwable
-		5. session : HttpSesseion
-		6, application : [ServerContext] (암기))
-		   웹 애플리케이션 정보저장
-		7. pageContext : PageContext
-		   JSP 페이지 대한 장보를 저장하는 객체
-		   ex04_03.jsp
-		8. page : Object
-		   JSP 페이지를 수현한 자바클래스 
-		9. config : ServletConfig 설정 정보 저장
+	                   
 	</xmp>  
+	
+	요청 URI : <%= request.getRequestURI() %><br>
+	요청 URI(EL) : ${pageContext.request.requestURI }<br>
+	
+	<hr />
+	
+	<%
+		request.setAttribute("name", "홍길동");
+	%>
+	
+	name : <%=request.getAttribute("name") %><br>
+	name(EL) : ${ requestScope.name }<br>
+	name(EL) : ${ name }<br>
+	
+	<hr />
+	age:<%= request.getParameter("age") %><br>
+	age(EL) : ${param.age }<br>
+	
 </div>
 
 <script>
