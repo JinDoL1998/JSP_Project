@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList"%>
+<%-- <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@
 		
 		[emptㅛ 연산자 정리]
 		값 null 		true
-		<%-- ${empty list} --%>
+		${empty list}
 		값 "" 			true
 		값 0 			true
 		빈 Collection, 	true
@@ -57,13 +57,13 @@
 	${"10" + 3 }<br> <!-- 13 -->
 	${null + 3 }<br> <!-- null일경우 long 0으로 처리된다. 3 -->
 	<!-- java + 덧센연산자, 문자열 연결 연산자 -->
-	<%-- ${"한글" + 3 }<br> --%> <!-- NumberFormatException -->
+	${"한글" + 3 }<br> <!-- NumberFormatException -->
 	 
 	 <hr />
 	 ${100 == 10 }<br>
 	 ${100 eq 10 }<br>
 	 ${100 != 10 }<br>
-	 <%-- ${100 ne 10 }<br> --%>
+	 ${100 ne 10 }<br>
 	 <br>
 	 ${100 > 10 }<br>
 	 ${100 gt 10 }<br>
@@ -101,4 +101,4 @@
 <script>
 </script>
 </body>
-</html>
+</html> --%>
