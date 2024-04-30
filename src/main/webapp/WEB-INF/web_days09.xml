@@ -34,22 +34,27 @@
 	</filter-mapping>
 	
 	<!-- 3.  컨트롤러 서블릿 등록 -->
-<!-- 	<servlet>
-		<description>listBoard</description>
-		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>days09.FileTestServlet</servlet-class>
-		<init-param>
-			<description>URL과 Handler 등록 파일 경로</description>
-			<param-name>path</param-name>
-			<param-value>/days09/FileTestServlet</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
+	<servlet>
+	  <description>서블릿 3.1 파일 업로드 테스트</description>
+	  <servlet-name>uploadServlet</servlet-name>
+	  <servlet-class>days09.UploadServlet</servlet-class>
+	  <!-- 업로드할때 임시로 저장되는 경로 -->
+	  <multipart-config> 
+	  	<location>C:\Tools\apache-tomcat-9.0.88\temp</location>
+	  	<!-- -1 : 무한대 byte -->
+	  	<max-file-size>-1</max-file-size>
+	  	<max-request-size>-1</max-request-size>
+	  	<!-- 1024kb보다 더 큰 파일 생성되면 C:\Tools\apache-tomcat-9.0.88\temp 임시파일 생성하겠다 -->
+	  	<file-size-threshold>1024</file-size-threshold>
+	  </multipart-config>
 	</servlet>
-	
 	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>*.ss</url-pattern>	
-	</servlet-mapping>  -->
+	  <servlet-name>uploadServlet</servlet-name>
+	  <!-- <url-pattern>/</url-pattern> -->
+	  <url-pattern>/days09/upload</url-pattern>
+	</servlet-mapping>
+	
+	
 		
 </web-app>
 
