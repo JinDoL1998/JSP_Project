@@ -1,4 +1,4 @@
-package days06.mvc.controller;
+package days10.replyboard.controller;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import days06.mvc.command.CommandHandler;
+import days10.replyboard.command.CommandHandler;
+
+
 
 // @WebServlet("/DispatcherServlet")
 public class DispatcherServlet extends HttpServlet {
@@ -35,8 +37,12 @@ public class DispatcherServlet extends HttpServlet {
     @Override
 	public void init(ServletConfig config) throws ServletException {
     	super.init(config);
+    	// System.out.println("> DispatcherServlet.init()...");
+    	// web.xml <servlet><init-param><param-name>path</servlet>
     	String path = this.getInitParameter("path");
     	String realPath = this.getServletContext().getRealPath(path);
+    	// C:\E\Class\Workspace\JSPClass\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jspPro\WEB-INF\commandHandler.properties
+    	// System.out.println(realPath);
     	
     	Properties prop = new Properties();
     	try (FileReader reader = new FileReader(realPath);){
