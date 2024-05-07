@@ -29,29 +29,50 @@
 </h3>
 <div>
   <xmp class="code">
-		
+            1. 지도를 출력할 컨테이너 div 태그 선언
+                  id="googleMap"
+            2.   new google.maps.Map() 객체 생성          
   </xmp>  
-  <a href="ex01_01.jsp?lat=37.499285&lng=127.0332008">(주) 쌍용교육센터</a>
+   
   <div id="googleMap" style="width: 100%;height:400px"></div>
   
 </div>
 
 <script>
   function myMap() {
+     var lat = <%= request.getParameter("lat") %>;
+     var lng = ${ param.lng };
+     
+     let mapCanvas = document.getElementById("googleMap") ;
+     let mapCenter =  new google.maps.LatLng(lat, lng);
+     
      var mapOptions = {
-           center:new google.maps.LatLng(51.508742, -0.120850)
+           center:mapCenter
              , zoom: 15
      };
      var map = new google.maps.Map( 
-           document.getElementById("googleMap") 
+           mapCanvas
            , mapOptions);
+     
+    // 쌍용교육센터의 위치를 표시 마커(지도의 객체)
+    // - 1. [마커], 폴리라인, 다각형, 원, 직사각형, 정보창 등등
+    let marker = new google.maps.Marker({
+       position:mapCenter      
+       // , animation: google.maps.Animation.BOUNCE
+       , icon : "pinkball.png"
+    });
+    marker.setMap(map);
+    
+    // 2. 정보창 표시
+    //let message = "<a href='http://www.sist.co.kr'>(주)쌍용교육센터</a>";
+    let message = "<a href='http://www.sist.co.kr'><img alt='lezhin.com 로고' src='//img-s-msn-com.akamaized.net/tenant/amp/entityid/BBFwET1.img'></a>";
+    let infoWindow = new google.maps.InfoWindow({
+       content: message
+    });
+    infoWindow.open( map, marker );
   }
-  
-
-  
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDesWXzID9COrvw6QwPAR3elAuV5-6VZiY&callback=myMap"></script>
-
 <!-- Maps JavaScript API 검색
 구글 지도 API 키 발급 받는 방법 (Maps JavaScript API)
 https://blog.cosmosfarm.com/archives/389/%EA%B5%AC%EA%B8%80-%EC%A7%80%EB%8F%84-api-%ED%82%A4-%EB%B0%9C%EA%B8%89-%EB%B0%9B%EB%8A%94-%EB%B0%A9%EB%B2%95-maps-javascript-api/
